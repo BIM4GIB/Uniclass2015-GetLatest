@@ -13,11 +13,27 @@
 #ClassificationManager#
 # GetLatest&Merge     #
 # v0.11               #
-# 13/10/21            #
+# 2021/10/13          #
 # by RPG @BIM4GIB     #
 # reviteer@hotmail.com#
 #######################
-
+#
+############################################################################################################################################################
+#rev v0.2 		Bug fixes (i.e. it actually runs now)
+#rev v0.3 		Updated order of tables, following table PM v1.0 release
+#rev v0.4 		Added Classification Manager Custom Database UK-Uniclass2015.xlsx with data connections to Uniclass2015-AllTables.xlsx
+#rev v0.5 		Added dialog box to confirm script run successfully and added autoupdating of the Classification Manager Database
+#rev v0.6 		Fixed form (dialog box). Now it does display even when not running in IDE.
+#rev v0.7 		Added Roles table, added flexibility to run regardless of location in the local computer
+#rev v0.8 		Temporarily disabled the classification manager database, as it needs some attention 
+#rev v0.9//2019.06.19// So much better now. Excel doesn't open while script is working, got the Classification Manager Database updater back in biz...So gud
+#rev v0.10//2019.08.09//NBS changed their website, broke script but now fixed+works a bit faster. Results window comes into focus now. 
+#			Added a line to force use of TLS1.2 to avoid problems with TLS1.1. Now downloads PDFs and place in folder named YYMM
+#rev v0.11//2021.10.13//Got NBS to fix broken link for SL table. Added -UseBasicParsing parameter for when IE is not present/initialised 
+#
+#TODO: *Migrate to Github
+#      
+#############################################################################################################################################################
 
 # Get Start Time
 $startDTM = (Get-Date)
@@ -70,29 +86,29 @@ if (Test-Path ($currentPath +'\Uniclass2015-AllTables.xlsx'))
 
 #Get latest tables links from NBS and temporarily save to current folder
 $tableCo = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*co*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableCo -OutFile $Co
+Invoke-WebRequest -Uri $tableCo -OutFile $Co -UseBasicParsing
 $tableEn = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*en*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableEn -OutFile $En
+Invoke-WebRequest -Uri $tableEn -OutFile $En -UseBasicParsing
 $tableAc = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*ac*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableAc -OutFile $Ac
+Invoke-WebRequest -Uri $tableAc -OutFile $Ac -UseBasicParsing
 $tableSL = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*sl*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableSL -OutFile $SL
+#Invoke-WebRequest -Uri $tableSL -OutFile $SL -UseBasicParsing
 $tableEF = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*ef*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableEF -OutFile $EF
+Invoke-WebRequest -Uri $tableEF -OutFile $EF -UseBasicParsing
 $tableSs = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*ss*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableSs -OutFile $Ss
+Invoke-WebRequest -Uri $tableSs -OutFile $Ss -UseBasicParsing
 $tablePr = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*pr*xlsx*"}).href)
-Invoke-WebRequest -Uri $tablePr -OutFile $Pr
+Invoke-WebRequest -Uri $tablePr -OutFile $Pr -UseBasicParsing
 $tableTE = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*te*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableTE -OutFile $TE
+Invoke-WebRequest -Uri $tableTE -OutFile $TE -UseBasicParsing
 $tablePM = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*pm*xlsx*"}).href)
-Invoke-WebRequest -Uri $tablePM -OutFile $PM
+Invoke-WebRequest -Uri $tablePM -OutFile $PM -UseBasicParsing
 $tableZz = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*zz*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableZz -OutFile $Zz
+Invoke-WebRequest -Uri $tableZz -OutFile $Zz -UseBasicParsing
 $tableFI = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*fi*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableFI -OutFile $FI
+Invoke-WebRequest -Uri $tableFI -OutFile $FI -UseBasicParsing
 $tableRo = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*ro*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableRo -OutFile $Ro
+Invoke-WebRequest -Uri $tableRo -OutFile $Ro -UseBasicParsing
 
 #PDF updates...
 #Temporarily removed question askign user y/n to downalod pdfs.
