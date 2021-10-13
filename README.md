@@ -8,12 +8,8 @@
 
 
 
-# > Uniclass2015 Tables  
-# > ClassificationManager
-# > GetLatest&Merge      
-# > v0.10                
-# > 09/08/19             
-# > by RPG @BIM4GIB (reviteer@hotmail.com)
+# Uniclass2015 Tables GetLatest&Merge
+> by RPG @BIM4GIB (reviteer@hotmail.com)
 
 	rev v0.2 bug fixes (i.e. it actually runs now)
 	rev v0.3 updated order of tables, following table PM v1.0 release
