@@ -7,34 +7,6 @@
 #     \ \__\\ _\\ \_______\ \__/ /     \ \__\   \ \__\ \ \_______\ \_______\ \__\\ _\   #  
 #      \|__|\|__|\|_______|\|__|/       \|__|    \|__|  \|_______|\|_______|\|__|\|__|  # 
 #########################################################################################
-# 
-#######################
-# Uniclass2015 Tables #
-#ClassificationManager#
-# GetLatest&Merge     #
-# v0.11               #
-# 2021/10/13          #
-# by RPG @BIM4GIB     #
-# reviteer@hotmail.com#
-#######################
-#
-############################################################################################################################################################
-#rev v0.2 		Bug fixes (i.e. it actually runs now)
-#rev v0.3 		Updated order of tables, following table PM v1.0 release
-#rev v0.4 		Added Classification Manager Custom Database UK-Uniclass2015.xlsx with data connections to Uniclass2015-AllTables.xlsx
-#rev v0.5 		Added dialog box to confirm script run successfully and added autoupdating of the Classification Manager Database
-#rev v0.6 		Fixed form (dialog box). Now it does display even when not running in IDE.
-#rev v0.7 		Added Roles table, added flexibility to run regardless of location in the local computer
-#rev v0.8 		Temporarily disabled the classification manager database, as it needs some attention 
-#rev v0.9//2019.06.19// So much better now. Excel doesn't open while script is working, got the Classification Manager Database updater back in biz...So gud
-#rev v0.10//2019.08.09//NBS changed their website, broke script but now fixed+works a bit faster. Results window comes into focus now. 
-#			Added a line to force use of TLS1.2 to avoid problems with TLS1.1. Now downloads PDFs and place in folder named YYMM
-#rev v0.11//2021.10.13//Got NBS to fix broken link for SL table. Added -UseBasicParsing parameter for when IE is not present/initialised 
-#
-#TODO: *Migrate to Github
-#      
-#############################################################################################################################################################
-
 # Get Start Time
 $startDTM = (Get-Date)
 
@@ -54,6 +26,7 @@ $uriUniclass = "https://www.thenbs.com/our-tools/uniclass-2015"
 $invokeURI = Invoke-WebRequest -uri $uriUniclass -UseBasicParsing
 
 #Assign paths                     #Below the HTML paths to xlsx's, maybe will use in future...
+#Tables' paths
 $Co = $currentPath + "\Co.xlsx"   #//*[@id="modal-download-tables"]/article/div/table/tbody/tr[2]/td[1]/a                        
 $En = $currentPath + "\En.xlsx"   #//*[@id="modal-download-tables"]/article/div/table/tbody/tr[3]/td[1]/a                    
 $Ac = $currentPath + "\Ac.xlsx"   #//*[@id="modal-download-tables"]/article/div/table/tbody/tr[4]/td[1]/a 
@@ -66,56 +39,56 @@ $PM = $currentPath + "\PM.xlsx"  #//*[@id="modal-download-tables"]/article/div/t
 $Zz = $currentPath + "\Zz.xlsx"  #//*[@id="modal-download-tables"]/article/div/table/tbody/tr[11]/td[1]/a
 $FI = $currentPath + "\FI.xlsx"  #//*[@id="modal-download-tables"]/article/div/table/tbody/tr[12]/td[1]/a
 $Ro = $currentPath + "\Ro.xlsx"  #//*[@id="modal-download-tables"]/article/div/table/tbody/tr[13]/td[1]/a
+
+#Update PDFs paths
+$CoPDF = $currentPath + "\UpdateNotesPDFs\" + $DateStamp + "_Co.pdf"                           
+$EnPDF = $currentPath + "\UpdateNotesPDFs\" + $DateStamp + "_En.pdf"                       
+$AcPDF = $currentPath + "\UpdateNotesPDFs\" + $DateStamp + "_Ac.pdf"
+$SLPDF = $currentPath + "\UpdateNotesPDFs\" + $DateStamp + "_SL.pdf"
+$EFPDF = $currentPath + "\UpdateNotesPDFs\" + $DateStamp + "_EF.pdf"
+$SsPDF = $currentPath + "\UpdateNotesPDFs\" + $DateStamp + "_Ss.pdf"
+$PrPDF = $currentPath + "\UpdateNotesPDFs\" + $DateStamp + "_Pr.pdf"
+$TEPDF = $currentPath + "\UpdateNotesPDFs\" + $DateStamp + "_TE.pdf"
+$PMPDF = $currentPath + "\UpdateNotesPDFs\" + $DateStamp + "_PM.pdf"
+$ZzPDF = $currentPath + "\UpdateNotesPDFs\" + $DateStamp + "_Zz.pdf"
+$FIPDF = $currentPath + "\UpdateNotesPDFs\" + $DateStamp + "_FI.pdf"
+$RoPDF = $currentPath + "\UpdateNotesPDFs\" + $DateStamp + "_Ro.pdf"
+
+#Create arrays
+$TableNames = @("co","en", "ac","sl","ef","ss","pr","te","pm","zz","fi","ro")
+$TablePaths = @($Co, $En, $Ac, $SL, $EF, $Ss, $Pr, $TE, $PM, $Zz, $FI, $Ro)
+$PDFPaths = @($CoPDF, $EnPDF, $AcPDF, $SLPDF, $EFPDF, $SsPDF, $PrPDF, $TEPDF, $PMPDF, $ZzPDF, $FIPDF, $RoPDF)
+$Tables = @($tableCo, $tableEn, $tableAc, $tableSL, $tableEF, $tableSs, $tablePr, $tableTE, $tablePM, $tableZz, $tableFI, $tableRo)
+#Classification Manager DB path
 $CMDBpath = $currentPath + '\ClassificationManagerDatabase-Uniclass2015.xlsx'
-$CoPDF = $currentPath + "\UpdatesNotesPDFs\" + $DateStamp + "Co.pdf"                           
-$EnPDF = $currentPath + "\UpdatesNotesPDFs\" + $DateStamp + "En.pdf"                       
-$AcPDF = $currentPath + "\UpdatesNotesPDFs\" + $DateStamp + "Ac.pdf"
-$SLPDF = $currentPath + "\UpdatesNotesPDFs\" + $DateStamp + "SL.pdf"
-$EFPDF = $currentPath + "\UpdatesNotesPDFs\" + $DateStamp + "EF.pdf"
-$SsPDF = $currentPath + "\UpdatesNotesPDFs\" + $DateStamp + "Ss.pdf"
-$PrPDF = $currentPath + "\UpdatesNotesPDFs\" + $DateStamp + "Pr.pdf"
-$TEPDF = $currentPath + "\UpdatesNotesPDFs\" + $DateStamp + "TE.pdf"
-$PMPDF = $currentPath + "\UpdatesNotesPDFs\" + $DateStamp + "PM.pdf"
-$ZzPDF = $currentPath + "\UpdatesNotesPDFs\" + $DateStamp + "Zz.pdf"
-$FIPDF = $currentPath + "\UpdatesNotesPDFs\" + $DateStamp + "FI.pdf"
-$RoPDF = $currentPath + "\UpdatesNotesPDFs\" + $DateStamp + "Ro.pdf"
 
 #Check if Uniclass2015-AllTables.xlsx exists, and if so, deletes it
 if (Test-Path ($currentPath +'\Uniclass2015-AllTables.xlsx'))
 {Remove-Item ($currentPath + '\Uniclass2015-AllTables.xlsx')}
+#Check if pdf destination path exists
+Test-Path -Path ($currentPath + "\UpdateNotesPDFs\")
+New-Item -ItemType directory -Path ($currentPath + "\UpdateNotesPDFs\") -Force
 
-#Get latest tables links from NBS and temporarily save to current folder
-$tableCo = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*co*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableCo -OutFile $Co -UseBasicParsing
-$tableEn = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*en*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableEn -OutFile $En -UseBasicParsing
-$tableAc = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*ac*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableAc -OutFile $Ac -UseBasicParsing
-$tableSL = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*sl*xlsx*"}).href)
-#Invoke-WebRequest -Uri $tableSL -OutFile $SL -UseBasicParsing
-$tableEF = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*ef*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableEF -OutFile $EF -UseBasicParsing
-$tableSs = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*ss*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableSs -OutFile $Ss -UseBasicParsing
-$tablePr = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*pr*xlsx*"}).href)
-Invoke-WebRequest -Uri $tablePr -OutFile $Pr -UseBasicParsing
-$tableTE = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*te*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableTE -OutFile $TE -UseBasicParsing
-$tablePM = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*pm*xlsx*"}).href)
-Invoke-WebRequest -Uri $tablePM -OutFile $PM -UseBasicParsing
-$tableZz = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*zz*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableZz -OutFile $Zz -UseBasicParsing
-$tableFI = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*fi*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableFI -OutFile $FI -UseBasicParsing
-$tableRo = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*ro*xlsx*"}).href)
-Invoke-WebRequest -Uri $tableRo -OutFile $Ro -UseBasicParsing
+#Get latest tables and update notes PDFs links from NBS
+For($I=0;$I -lt $Tables.count;$I++){
+    try {
+        $Tables[$I]=($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*$TableNames[$I]*xlsx*"}).href)
+        Invoke-WebRequest -Uri $Tables[$I] -OutFile $TablesPaths[$I] -UseBasicParsing
+    }
+    catch {
+        Write-Output "$TablePaths[$I] - $($_.Exception.Message)"
+    }
+}
+<#The For loop to get PDFs is failing (getting invlaid pdf file that is actually html)
+For($I=0;$I -lt $Tables.count;$I++){
+    
+        $Tables[$I]=($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*$TableNames[$I]*pdf*"}).href)
+        Invoke-WebRequest -Uri $Tables[$I] -OutFile $PDFPaths[$I]  
+       
+    
+}
+#>
 
-#PDF updates...
-#Temporarily removed question askign user y/n to downalod pdfs.
-#$getPDFs = ((Read-Host -Prompt "Download Status and Revision Information PDFs? (y/n)").ToLower()) #Check if PDF need downloading
-#if ($getPDFs -eq 'y'){if(!(Test-Path -Path ($currentPath + "\UpdatesNotesPDFs\"))) { }              #Check if pdf destination path exists
-	Test-Path -Path ($currentPath + "\UpdatesNotesPDFs\")
-    New-Item -ItemType directory -Path ($currentPath + "\UpdatesNotesPDFs\") -Force 
 
     $tableCo = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*co*pdf*"}).href)
     Invoke-WebRequest -Uri $tableCo -OutFile $CoPDF
@@ -143,6 +116,8 @@ Invoke-WebRequest -Uri $tableRo -OutFile $Ro -UseBasicParsing
     $tableRo = ($uriNBS + ($invokeURI.Links | ? {$_.href -like "*uniclass2015*ro*pdf*"}).href)
     Invoke-WebRequest -Uri $tableRo -OutFile $RoPDF
 #} End of if statement above, temporarily removed because reasons.
+
+
 #Begin merging tables into one file
 
 #Initialise excel
@@ -306,6 +281,10 @@ $sheetToCopy = $wb1.sheets.item("Co")
 $sheetToCopy.copy($sh1_wb1) 
 $wb1.close($false)
 
+
+
+
+
 #Finished merging, copying and updating
 
 # Close and save destination workbook
@@ -320,7 +299,7 @@ Rename-Item $Ro "Uniclass2015-AllTables.xlsx"
 Get-ChildItem -Path  $currentPath -Recurse | Where{$_.Name -like "??.xlsx"} | Remove-Item
 
 #Tidy up
-Remove-Variable -name Co,En,Ac,SL,EF,Ss,Pr,TE,PM,Zz,FI,Ro,tableCo,tableEn,tableAc,tableSL,tableEF,tableSs,tablePr,tableTE,tablePM,tableZz,tableFI,tableRo,currentPath,sheetToCopy,CMDB,CMDBpath,shEF,wb1,wb2,wb3,wb4,wb5,wb6,wb7,wb8,wb9,wb10,wb11,wb12,xl,sh1_wb1,sh1_wb2,sh1_wb3,sh1_wb4,sh1_wb5,sh1_wb6,sh1_wb7,sh1_wb8,sh1_wb9,sh1_wb10,sh1_wb11
+Remove-Variable -name Co,En,Ac,SL,EF,Ss,Pr,TE,PM,Zz,FI,Ro,tableCo,tableEn,tableAc,tableSL,tableEF,tableSs,tablePr,tableTE,tablePM,tableZz,tableFI,tableRo,currentPath,sheetToCopy,CMDB,CMDBpath,shEF,wb1,wb2,wb3,wb4,wb5,wb6,wb7,wb8,wb9,wb10,wb11,wb12,xl,sh1_wb1,sh1_wb2,sh1_wb3,sh1_wb4,sh1_wb5,sh1_wb6,sh1_wb7,sh1_wb8,sh1_wb9,sh1_wb10,sh1_wb11,TableNames,Tables,TablePaths,PDFPaths
 [gc]::collect() 
 [gc]::WaitForPendingFinalizers()
 
