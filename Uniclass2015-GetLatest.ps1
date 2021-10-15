@@ -7,34 +7,6 @@
 #     \ \__\\ _\\ \_______\ \__/ /     \ \__\   \ \__\ \ \_______\ \_______\ \__\\ _\   #  
 #      \|__|\|__|\|_______|\|__|/       \|__|    \|__|  \|_______|\|_______|\|__|\|__|  # 
 #########################################################################################
-# 
-#######################
-# Uniclass2015 Tables #
-#ClassificationManager#
-# GetLatest&Merge     #
-# v0.11               #
-# 2021/10/13          #
-# by RPG @BIM4GIB     #
-# reviteer@hotmail.com#
-#######################
-#
-############################################################################################################################################################
-#rev v0.2 		Bug fixes (i.e. it actually runs now)
-#rev v0.3 		Updated order of tables, following table PM v1.0 release
-#rev v0.4 		Added Classification Manager Custom Database UK-Uniclass2015.xlsx with data connections to Uniclass2015-AllTables.xlsx
-#rev v0.5 		Added dialog box to confirm script run successfully and added autoupdating of the Classification Manager Database
-#rev v0.6 		Fixed form (dialog box). Now it does display even when not running in IDE.
-#rev v0.7 		Added Roles table, added flexibility to run regardless of location in the local computer
-#rev v0.8 		Temporarily disabled the classification manager database, as it needs some attention 
-#rev v0.9//2019.06.19// So much better now. Excel doesn't open while script is working, got the Classification Manager Database updater back in biz...So gud
-#rev v0.10//2019.08.09//NBS changed their website, broke script but now fixed+works a bit faster. Results window comes into focus now. 
-#			Added a line to force use of TLS1.2 to avoid problems with TLS1.1. Now downloads PDFs and place in folder named YYMM
-#rev v0.11//2021.10.13//Got NBS to fix broken link for SL table. Added -UseBasicParsing parameter for when IE is not present/initialised 
-#
-#TODO: *Migrate to Github
-#      
-#############################################################################################################################################################
-
 # Get Start Time
 $startDTM = (Get-Date)
 
