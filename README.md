@@ -12,8 +12,10 @@
 	rev v0.10//2019.08.09 NBS changed their website, broke script but now fixed+works a bit faster. Results window comes into focus now. 
 	          Added a line to force use of TLS1.2 to avoid problems with TLS1.1. Now downloads PDFs and place in folder named YYMM
 	rev v0.11//2021.10.13// Now in GitHub! Also added -UseBasicParsing parameter for when IE is not present/initialised
-	
-	TODO: *Put some loops in there, make it pretty, add some classes and functions too     
+	...
+	rev v0.12//2024.09.16// WE ARE SO BACK. Whole rewrite. Getting a combined spreadsheet with all tables in 7 seconds.
+ 				CM updater disabled for now.
+ 		
 
 
 
